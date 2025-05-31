@@ -1,45 +1,46 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { useState,useEffect } from 'react';
-import {colorFromId} from './colors2.js'
+import { useState, useEffect } from 'react';
+import { colorFromId } from './colors2.js';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import PostList from './components/PostList';
+import PostDetail from './components/PostDetail';
 function App() {
-  const [posts,setposts]=useState([]);
-  const [loading,setloading]=useState(true);
-  async function fetchData(){
-    const posts1=await fetch('https://dummyjson.com/posts?limit=10&skip=0');
-    const data=await posts1.json();
-    try{
-     setposts(data.posts);
-    }
-    catch(err){
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  async function fetchData() {
+    const posts1 = await fetch('https://dummyjson.com/posts?limit=100&skip=0');
+    const data = await posts1.json();
+    try {
+      setPosts(data.posts);
+    } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
-    finally{
-      setloading(false);
-    }
-    }
-    useEffect(() => {
-      fetchData();
-    }, []);  
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
-    <div className="App">
-    <h1 style={{fontsize:'20px'}}>React Assignment</h1>
-    <h2> Posts</h2>
-    { loading? (
-      <p>Loading posts...Have some patience!!</p>
-    ) : (
-      <div className="post-container">
-        {posts.map((post) => (
-  <div className="post-card" key={post.id} style={{backgroundColor:colorFromId(post.id)}}>
-    <h2 style={{fontStyle:'oblique'}}>{post.title}</h2>
-    <p>{post.body}</p>
-    <p style={{color:'brown'}}>Tags: {post.tags.join(', ')}</p>
-    <p style={{color:"red"}}>Reactions: Likes: {post.reactions.likes}, Dislikes: {post.reactions.dislikes}</p>
-  </div>
-))}
+    <Router>
+      <div className="App">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={
+              <PostList posts={posts} loading={loading} />
+            } />
+            <Route path="/post/:id" element={
+              <PostDetail posts={posts} loading={loading} />
+            } />
+          </Routes>
+        </main>
+        <Footer />
       </div>
-    )}
-  </div>
+    </Router>
   );
 }
+
 export default App;
