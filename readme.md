@@ -1,4 +1,4 @@
-# React Assignment - Posts Viewer
+# React Assignment - Posts Viewer (group-1)
 This project is a simple React application that displays posts fetched from an API. Each post includes a title, body, tags, and reactions (likes and dislikes). The posts are styled using custom CSS and organized into responsive cards.
 
 ##  Features
@@ -14,3 +14,6 @@ This project is a simple React application that displays posts fetched from an A
 - **JavaScript (ES6)**
 - **HTML/CSS**
 - **Axios or Fetch API**
+
+- ![image](https://github.com/user-attachments/assets/a1fd6f56-f33b-4685-9f2d-79de9bb8ed29)
+
